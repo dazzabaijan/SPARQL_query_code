@@ -28,6 +28,7 @@ WHERE
   ?item wdt:P31 wd:Q5. # all the items that have instance-of with value human
   ?item wdt:P27 wd:Q30.  # and who are citizens of the US
   ?item wdt:P106 wd:Q1930187. # and who are journalists
+  ?item wdt:P19 wd:Q1297 # who have place of birth in Chicago
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }"""
 
