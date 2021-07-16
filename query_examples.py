@@ -80,16 +80,17 @@ example_query5 = """# American politicians whose father was also a politician
 # occupation - politician
 # father - ?father
 
-SELECT ?item ?itemLabel ?fatherLabel
+SELECT ?child ?childLabel ?fatherLabel
 WHERE 
 {
-  ?item wdt:P31 wd:Q5. # instance of human
-  ?item wdt:P27 wd:Q30. # US citizen
-  ?item wdt:P106 wd:Q82955. # politician
-  ?item wdt:P22 ?father. # who have *a* father
+  ?child wdt:P31 wd:Q5. # instance of human
+  ?child wdt:P27 wd:Q30. # US citizen
+  ?child wdt:P106 wd:Q82955. # politician
+  ?child wdt:P22 ?father. # who have *a* father
   ?father wdt:P106 wd:Q82955. # who *himself* was a politician
   
   ?child wdt:P569 ?dob . # child should have *a* date of birth
+  FILTER (YEAR(?dob) > 1950)
   
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 }

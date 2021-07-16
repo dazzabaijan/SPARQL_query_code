@@ -11,14 +11,25 @@ endpoint_url = "https://query.wikidata.org/sparql"
 # here it'll show two columns of item and itemLabel
 # codes within {} of WHERE set specific conditions of a query 
 # we go through wikidata and returns matches of what we specify in the triple
-query = """# Cats
-SELECT ?item ?itemLabel 
+
+query = """# Top companies in the world with employee numbers over a certain value
+SELECT ?company ?companyLabel ?employeesnumLabel ?websiteLabel
 WHERE 
 {
- # a triple of item, property and value
-  ?item wdt:P31 wd:Q146. # want any items with propery P31 and value Q146 (house cats)
+  # Item Property Value
+  #{?company wdt:P31 wd:Q783794.} # company
+  #UNION
+  {?company wdt:P31 wd:Q891723.} # public company
+  UNION
+  {?company wdt:P31 wd:Q4830453.} # business
+  UNION
+  {?company wdt:P31 wd:Q43229. } # organisation
+  ?company wdt:P1128 ?employeesnum.
+  FILTER (?employeesnum > 5000)
+  ?company wdt:P856 ?website
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}"""
+}
+"""
 
 def get_results(endpoint_url, query):
     user_agent = "WDQS-example Python/%s.%s" % (sys.version_info[0], sys.version_info[1])
